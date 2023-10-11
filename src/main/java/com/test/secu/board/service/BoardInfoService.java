@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.test.secu.board.mapper.BoardInfoMapper;
 import com.test.secu.board.vo.BoardInfoVO;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,12 @@ public class BoardInfoService {
 			@Value("${upload.file-path}")
 			private String filePath;
 			
+			@Autowired
+			private BoardInfoMapper boardMapper;
+			
+			public BoardInfoVO login(BoardInfoVO board){
+		        return boardMapper.selectBoardInfoByBiNum(board);
+		    }
 			public int addBoard(BoardInfoVO board) throws IllegalStateException, IOException {
 				log.info("filePath=>{}", filePath);
 				log.info("board=>{}", board);
