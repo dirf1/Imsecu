@@ -1,0 +1,30 @@
+server:
+  port: 80
+spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+        
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+  datasource:
+    url: jdbc:log4jdbc:mariadb://runtime.co.kr:3306/team4
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: team4
+    password: kcyj&%!#
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 1
+      connection-init-sql: select now()
+
+mybatis:
+  mapper-locations: mapper/**/*.xml
+  configuration:
+   map-underscore-to-camel-case: true
+   
+upload:
+  file-path: C:\dev\upload
+   

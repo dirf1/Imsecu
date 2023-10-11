@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>회원가입</h3>
+	<input type="text" id="uiId" placeholder="ID"><br>
+	<input type="password" id="uiPwd" placeholder="Password"><br>
+	<input type="text" id="uiName" placeholder="Name"><br>
+	<input type="text" id="uiMobile" placeholder="Mobile Phone Number"><br>
+	<input type="text" id="uiEmail" placeholder="Email"><br>
+	<input type="data" id="uiBirth" placeholder="Birth Day"><br>
+	<button onclick="join()">회원가입</button>
+	<script>
+		async function join() {
+            const data = getJsonFromData();
+
+            const response = await fetch('/join', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                }
+            });
+		const user = await res.json();
+		if(user && user.uiId){
+			alert(`${user.uiName}님 로그인 해주세요.`);
+			location.href='/html/login';
+			}
+		}
+	</script>
+	
+	<script>
+		function getData() {
+    const formObjs = document.querySelectorAll('input[id], select[id], textarea[id]');
+    const data = {};
+    for (const formObj of formObjs) {
+        if (formObj.type === 'radio') {
+            if (!data[formObj.name] && document.querySelector(`[name=${formObj.name}]:checked`)) {
+                data[formObj.name] = document.querySelector(`[name=${formObj.name}]:checked`).value;
+            }
+        } else if (formObj.type === 'checkbox') {
+            const checkObjs = document.querySelectorAll(`[name=${formObj.name}]:checked`);
+            const values = [];
+            for (const checkObj of checkObjs) {
+                values.push(checkObj.value);
+            }
+            data[formObj.name] = values;
+        } else if (formObj.type === 'select-multiple') {
+            const selectedObjs = document.querySelectorAll(`[id=${formObj.id}] option:checked`);
+            const values = [];
+            for (const selectedObj of selectedObjs) {
+                values.push(selectedObj.value);
+            }
+            data[formObj.id] = values;
+        }
+        else if (formObj.type === 'date') {
+            // 하이픈 '-' 제거
+            data[formObj.id] = formObj.value.replace(/-/g, '');
+        }
+        else {
+            data[formObj.id] = formObj.value;
+        }
+    }
+    return data;
+}
+
+function getJsonFromData() {
+    return JSON.stringify(getData());
+}
+	</script>
+</body>
+</html>

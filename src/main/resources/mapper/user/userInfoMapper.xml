@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.secu.user.mapper.UserInfoMapper">
+   <sql id="userInfoCols">
+   		UI_NUM, UI_NAME, UI_ID, UI_PWD, 
+   		UI_MOBILE, UI_EMAIL, UI_BIRTH, CREDAT, 
+   		LMODAT, ACTIVE
+   </sql>
+   
+   <select id="selectUserInfoByUiId">
+   		SELECT * FROM USER_INFO
+   		WHERE UI_ID = #{uiId}
+   </select>
+   
+   <insert id="insertUserInfo">
+	 INSERT INTO USER_INFO{
+	 	UI_NAME, UI_ID, UI_PWD, UI_MOBILE,
+	 	UI_EMAIL, UI_BIRTH
+	 )
+	 VALUES(
+	 	#{uiName}, #{uiId}, #{uiPwd}, #{uiMobile},
+	 	#{uiEmail}, #{uiBirth}
+	 )
+	</insert>
+	
+	<update id="updateUserInfoUiPwd">
+		UPDATE USER_INFO
+		SET UI_PWD = #{uiPwd}
+		WHERE UI_NUM = #{uiNum}
+	</update>
+</mapper>

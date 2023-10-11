@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>Login</h3>
+	<form method="post" action="/login">
+		<input type="text" id="uiId" name="uiId" placeholder="아이디"><br>
+		<input type="text" id="uiPwd" name="uiPwd" placeholder="비밀번호"><br>
+		<button onclick="login()">로그인</button>
+	</form>
+	<script>
+	async function login(){
+		const json = JSON.stringify({
+			uiId: document.querySelector('#uiId').value,
+			uiPwd: document.querySelector('#uiPwd').value,
+		});
+		const res = await fetch('/login', {
+            method: 'POST',
+            body: json,
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+	}
+	</script>
+</body>
+</html>
