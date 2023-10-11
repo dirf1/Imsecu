@@ -3,7 +3,7 @@
 
 <mapper namespace="com.test.secu.board.mapper.BoardInfoMapper">
    <sql id="boardInfoCols">
-   		BI_NUM, BI_TITLE, BI_CONTETN, UI_NUM, 
+   		BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, 
    		BI_FILE_PATH, BI_FILE_NAME, CREDAT, CRETIM,
    		LMODAT, LMOTIM, ACTIVE
    </sql>
@@ -12,4 +12,25 @@
    		SELECT * FROM BOARD_INFO
    		WHERE BI_NUM = #{biNum}
    </select>
+   
+   <select id="selectBoardInfos" resultType="com.test.secu.board.vo.BoardInfoVO">
+		SELECT BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME
+		FROM BOARD_INFO
+		<where>
+			<if test='biNum != null and biNum != ""'>
+				AND BI_NUM LIKE CONCAT('%',#{biNum},'%')
+			</if>
+			<if test='biNum != 0'>
+				AND BI_NUM = #{biNum}
+			</if>
+			<if test='biNum != null and biNum != ""'>
+				AND BI_NUM = #{biNum}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertBoardInfo" parameterType="com.test.secu.board.vo.BoardInfoVO">
+		INSERT INTO BOARD_INFO(BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME)
+		VALUES(#{biNum},#{biTitle},#{biContent},#{uiNum},#{biFilePath},#{biFileName})
+	</insert>
 </mapper>
