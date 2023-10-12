@@ -15,6 +15,7 @@ public class BoardInfoVO {
 	private String biTitle;
 	private String biContent;
 	private int uiNum;
+	private String uiName;
 	private String biFilePath;
 	private String biFileName;
 	private MultipartFile file;
@@ -22,5 +23,8 @@ public class BoardInfoVO {
 	private String cretim;
 	private String lmodat;
 	private String lmotim;
-	private String uiName;
+	private int page;
+	private int start;
+	private int end;
+	private int pageSize;
 }

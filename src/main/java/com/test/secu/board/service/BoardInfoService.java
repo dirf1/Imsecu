@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.secu.board.mapper.BoardInfoMapper;
 import com.test.secu.board.vo.BoardInfoVO;
+import com.test.secu.common.vo.ResponsePageVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,7 +51,12 @@ public class BoardInfoService {
 		return null;
 	}
 
-	public List<BoardInfoVO> selectBoardInfos(BoardInfoVO board) {
-		return boardMapper.selectBoardInfos(board);
+	public ResponsePageVO<BoardInfoVO> selectBoardInfos(BoardInfoVO board) {
+		ResponsePageVO<BoardInfoVO> resVO = new ResponsePageVO<>();
+		
+		resVO.setList(boardMapper.selectBoardInfos(board));
+		resVO.setTotalCnt(boardMapper.selectBoardInfoCnt(board));
+		
+		return resVO;
 	}
 }

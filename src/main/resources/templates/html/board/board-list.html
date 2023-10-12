@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/test.css">
 </head>
 <body>
 <h3>List</h3>
@@ -19,16 +20,29 @@
 	<tbody id="tbody">
 	</tbody>
 </table>
+<div id="pageDiv"></div>
 <script>
-	window.addEventListener('load',async function(){
-		const res = await fetch('/board-infos');
-		const boards = await res.json();
+	let total = 0;
+	let pageSize = 5;	
+	const getBoards = async function(evt, page){
+		if(!page){
+			page = 1;
+		}
+		const res = await fetch(`/board-infos?page=${page}&pageSize=${pageSize}`);
+		const json = await res.json();
+		const totalCnt = json.totalCnt;
+		const pageBlock = Math.ceil(totalCnt/pageSize);
+		let pageHtml = '';
+		for(let i=1; i<=pageBlock; i++){
+			pageHtml += `<a href="/board-infos?page=${page}&pageSize=${pageSize}"><b>[ ${i} ] </b></a>`;
+		} 
+		document.querySelector('#pageDiv').innerHTML = pageHtml;
 		let html = '';
-		for(const board of boards){
+		for(const board of json.list){
 			html +='<tr>';
 			html +=`<td>${board.biNum}</td>`
 			html +=`<td>${board.biTitle}</td>`
-			html +=`<td>${board.biFileName}</td>`
+			html +=`<td>${board.biFileName?'<img src="/imgs/file.jpg" with="30">':''}</td>`
 			html +=`<td>${board.uiName}</td>`
 			html +=`<td>${board.uiNum}</td>`
 			html +=`<td>${board.cretim}</td>`
@@ -36,7 +50,8 @@
 			html +='</tr>';
 		}
 		document.querySelector('#tbody').innerHTML = html;
-	})
+	}
+	window.addEventListener('load',getBoards);
 </script>
 </body>
 </html>

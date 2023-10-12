@@ -15,9 +15,9 @@
 
 	<insert id="insertBoardInfo" useGeneratedKeys="true"
 		keyColumn="BI_NUM" keyProperty="biNum">
-		INSERT INTO BOARD_INFO(BI_NUM,BI_TITLE,
-		BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME)
-		VALUES(#{biNum},#{biTitle},#{biContent},#{uiNum},#{biFilePath},#{biFileName})
+		INSERT INTO BOARD_INFO(BI_NUM,BI_TITLE, BI_CONTENT, UI_NUM,
+		BI_FILE_PATH, BI_FILE_NAME,CREDAT)
+		VALUES(#{biNum},#{biTitle},#{biContent},#{uiNum},#{biFilePath},#{biFileName},#{credat})
 	</insert>
 
 	<select id="selectBoardInfo"
@@ -31,8 +31,17 @@
 
 	<select id="selectBoardInfos" resultType="com.test.secu.board.vo.BoardInfoVO">
 		SELECT BI.BI_NUM, BI.BI_TITLE, BI.UI_NUM, UI.UI_NAME,
-		BI.CREDAT, BI.CRETIM, BI.BI_FILE_NAME
+		DATE_FORMAT(BI.CREDAT,'%Y-%m-%d') CREDAT, DATE_FORMAT(STR_TO_DATE(BI.CRETIM,'%h%i%s'),'%h:%i:%s') CRETIM, 
+		BI.BI_FILE_NAME
 		FROM BOARD_INFO BI
 		INNER JOIN USER_INFO UI ON BI.UI_NUM = UI.UI_NUM
+		ORDER BY BI_NUM DESC
+		LIMIT #{start}, #{end}
+	</select>
+	
+	<select id="selectBoardInfoCnt" resultType="int">
+	SELECT count(*)
+	FROM BOARD_INFO BI
+	INNER JOIN USER_INFO UI ON BI.UI_NUM = UI.UI_NUM
 	</select>
 </mapper>

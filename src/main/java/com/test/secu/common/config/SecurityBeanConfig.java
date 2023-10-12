@@ -29,8 +29,7 @@ public class SecurityBeanConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity hs) throws Exception {
 		hs.authorizeHttpRequests(req->req
-				.antMatchers("/login", "/join", "/html/join", "/html/login",
-						"/html/board/board-add","/html/board/board-list","/board-infos")
+				.antMatchers("/login", "/join", "/html/join", "/html/login")
 				.permitAll()
 				.anyRequest().authenticated())
 		.formLogin(formLogin->formLogin
