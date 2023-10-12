@@ -24,16 +24,9 @@ public class BoardInfoService {
 	@Autowired
 	private BoardInfoMapper boardMapper;
 
-	public BoardInfoVO login(BoardInfoVO board) {
-		return boardMapper.selectBoardInfoByBiNum(board);
-	}
-
 	public BoardInfoVO addBoard(BoardInfoVO board) throws IllegalStateException, IOException {
-		log.info("filePath=>{}", filePath);
-		log.info("board=>{}", board);
 		String fileName = board.getFile().getOriginalFilename();
 		if (!fileName.isEmpty()) {
-
 			String uuid = UUID.randomUUID().toString();
 			int idx = fileName.lastIndexOf(".");
 			String extName = fileName.substring(idx);
@@ -42,15 +35,19 @@ public class BoardInfoService {
 			board.getFile().transferTo(file);
 			log.info("fileName=>{}", fileName);
 			board.setBiFileName(fileName);
-			board.setBiFilePath(saveFilePath);
+			board.setBiFilePath(uuid + extName);
 		}
 		boardMapper.insertBoardInfo(board);
 		if (board.getBiNum() != 0) {
-			return boardMapper.selectBoardInfo(board);
+			return boardMapper.selectBoardInfo(board.getBiNum());
 		}
 		return null;
 	}
-
+	
+	public BoardInfoVO getBoardInfo(int biNum) {
+		return boardMapper.selectBoardInfo(biNum);
+	}
+	
 	public ResponsePageVO<BoardInfoVO> selectBoardInfos(BoardInfoVO board) {
 		ResponsePageVO<BoardInfoVO> resVO = new ResponsePageVO<>();
 		

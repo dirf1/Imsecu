@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.test.secu.board.service.BoardInfoService;
@@ -31,6 +32,11 @@ public class BoardInfoController {
 	public BoardInfoVO addBoard(BoardInfoVO board, @AuthenticationPrincipal UserInfoVO user) throws IllegalStateException, IOException {
 		board.setUiNum(user.getUiNum());
 		return boardService.addBoard(board);
+	}
+	
+	@GetMapping("/board-infos/{biNum}")
+	public BoardInfoVO getBoardInfo(@PathVariable int biNum) {
+		return boardService.getBoardInfo(biNum);
 	}
 	
 	@GetMapping("/board-infos")

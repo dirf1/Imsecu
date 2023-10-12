@@ -14,13 +14,16 @@
 		<th>파일이름</th>
 		<th>유저이름</th>
 		<th>유저번호</th>	
-		<th>시간</th>
-		<th>날짜</th>
+		<th>등록시간</th>
+		<th>등록날짜</th>	
 	</tr>
+	
 	<tbody id="tbody">
 	</tbody>
 </table>
+<button id="pageDiv">등록</button>
 <div id="pageDiv">
+	<a href="/html/board/board-add">등록</a>
 	
 </div>
 <script>
@@ -44,7 +47,7 @@
 		for(const board of json.list){
 			html +='<tr>';
 			html +=`<td>${board.biNum}</td>`
-			html +=`<td>${board.biTitle}</td>`
+			html +=`<td><a href="/html/board/board-view?biNum=${board.biNum}">${board.biTitle}</td>`
 			html +=`<td>${board.biFileName?'<img src="/imgs/file.jpg" with="30">':''}</td>`
 			html +=`<td>${board.uiName}</td>`
 			html +=`<td>${board.uiNum}</td>`

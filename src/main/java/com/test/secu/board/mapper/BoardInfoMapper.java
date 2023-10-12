@@ -4,12 +4,10 @@ import java.util.List;
 
 import com.test.secu.board.vo.BoardInfoVO;
 
-public interface BoardInfoMapper {
-	BoardInfoVO selectBoardInfoByBiNum(BoardInfoVO board);
-	
+public interface BoardInfoMapper {	
 	int insertBoardInfo(BoardInfoVO board);
 	
-	BoardInfoVO selectBoardInfo(BoardInfoVO board);
+	BoardInfoVO selectBoardInfo(int biNum);
 	
 	List<BoardInfoVO> selectBoardInfos(BoardInfoVO board);
 	

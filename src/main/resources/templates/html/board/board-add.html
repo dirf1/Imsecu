@@ -5,11 +5,31 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form method="post" action="/board-infos" enctype="multipart/form-data">
-		<input type="text" name="biTitle"><br><br>
-		<textarea name="biContent"></textarea><br>
-		<input type="file" name="file"><br>
-		<button>등록</button>
-	</form>
+		<input type="text" id="biTitle"><br><br>
+		<textarea id="biContent"></textarea><br>
+		<input type="file" id="file"><br>
+		<button onclick="addBoard()">등록</button>
+	<script>
+		async function addBoard(){
+			const inputFile = document.querySelector('#file');
+			const formData = new FormData();
+			const biTitle= document.querySelector('#biTitle').value;
+			const biContent= document.querySelector('#biContent').value;
+			formData.append('biTitle',biTitle);
+			formData.append('biContent',biContent);
+			if(inputFile.files.length){
+				const file = inputFile.files[0];
+				formData.append('file',file);
+			}
+			const res= await fetch('/board-infos',{
+				method:'POST',
+				body:formData
+			});
+			const board = await res.json();
+			if(board.biNum){
+				location.href='/html/board/board-list';
+			}
+		}
+	</script>
 </body>
 </html>
