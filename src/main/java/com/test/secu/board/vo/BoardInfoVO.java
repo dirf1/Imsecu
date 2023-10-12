@@ -22,4 +22,5 @@ public class BoardInfoVO {
 	private String cretim;
 	private String lmodat;
 	private String lmotim;
+	private String uiName;
 }

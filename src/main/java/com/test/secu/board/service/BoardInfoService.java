@@ -26,12 +26,8 @@ public class BoardInfoService {
 	public BoardInfoVO login(BoardInfoVO board) {
 		return boardMapper.selectBoardInfoByBiNum(board);
 	}
-	
-	public List<BoardInfoVO> getBoardInfos(BoardInfoVO user){
-		return boardMapper.selectBoardInfos(user);
-	}
 
-	public int addBoard(BoardInfoVO board) throws IllegalStateException, IOException {
+	public BoardInfoVO addBoard(BoardInfoVO board) throws IllegalStateException, IOException {
 		log.info("filePath=>{}", filePath);
 		log.info("board=>{}", board);
 		String fileName = board.getFile().getOriginalFilename();
@@ -47,6 +43,14 @@ public class BoardInfoService {
 			board.setBiFileName(fileName);
 			board.setBiFilePath(saveFilePath);
 		}
-		return boardMapper.insertBoardInfo(board);
+		boardMapper.insertBoardInfo(board);
+		if (board.getBiNum() != 0) {
+			return boardMapper.selectBoardInfo(board);
+		}
+		return null;
+	}
+
+	public List<BoardInfoVO> selectBoardInfos(BoardInfoVO board) {
+		return boardMapper.selectBoardInfos(board);
 	}
 }

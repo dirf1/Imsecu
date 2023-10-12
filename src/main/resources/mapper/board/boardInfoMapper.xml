@@ -2,35 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.test.secu.board.mapper.BoardInfoMapper">
-   <sql id="boardInfoCols">
-   		BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, 
-   		BI_FILE_PATH, BI_FILE_NAME, CREDAT, CRETIM,
-   		LMODAT, LMOTIM, ACTIVE
-   </sql>
-   
-   <select id="selectBoardInfoByBiNum">
-   		SELECT * FROM BOARD_INFO
-   		WHERE BI_NUM = #{biNum}
-   </select>
-   
-   <select id="selectBoardInfos" resultType="com.test.secu.board.vo.BoardInfoVO">
-		SELECT BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME
-		FROM BOARD_INFO
-		<where>
-			<if test='biNum != null and biNum != ""'>
-				AND BI_NUM LIKE CONCAT('%',#{biNum},'%')
-			</if>
-			<if test='biNum != 0'>
-				AND BI_NUM = #{biNum}
-			</if>
-			<if test='biNum != null and biNum != ""'>
-				AND BI_NUM = #{biNum}
-			</if>
-		</where>
+	<sql id="boardInfoCols">
+		BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM,
+		BI_FILE_PATH, BI_FILE_NAME, CREDAT, CRETIM,
+		LMODAT, LMOTIM, ACTIVE
+	</sql>
+
+	<select id="selectBoardInfoByBiNum">
+		SELECT * FROM BOARD_INFO
+		WHERE BI_NUM = #{biNum}
 	</select>
-	
-	<insert id="insertBoardInfo" parameterType="com.test.secu.board.vo.BoardInfoVO">
-		INSERT INTO BOARD_INFO(BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME)
+
+	<insert id="insertBoardInfo" useGeneratedKeys="true"
+		keyColumn="BI_NUM" keyProperty="biNum">
+		INSERT INTO BOARD_INFO(BI_NUM,BI_TITLE,
+		BI_CONTENT, UI_NUM, BI_FILE_PATH, BI_FILE_NAME)
 		VALUES(#{biNum},#{biTitle},#{biContent},#{uiNum},#{biFilePath},#{biFileName})
 	</insert>
+
+	<select id="selectBoardInfo"
+		resultType="com.test.secu.board.vo.BoardInfoVO">
+		SELECT BI_NUM, BI_TITLE, BI_CONTENT, UI_NUM,
+		BI_FILE_PATH, BI_FILE_NAME, CREDAT, CRETIM,
+		LMODAT, LMOTIM
+		FROM BOARD_INFO
+		WHERE BI_NUM=#{biNum}
+	</select>
+
+	<select id="selectBoardInfos" resultType="com.test.secu.board.vo.BoardInfoVO">
+		SELECT BI.BI_NUM, BI.BI_TITLE, BI.UI_NUM, UI.UI_NAME,
+		BI.CREDAT, BI.CRETIM, BI.BI_FILE_NAME
+		FROM BOARD_INFO BI
+		INNER JOIN USER_INFO UI ON BI.UI_NUM = UI.UI_NUM
+	</select>
 </mapper>

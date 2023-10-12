@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h3>List</h3>
+<table border="1">
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+		<th>파일이름</th>
+		<th>유저번호</th>
+		<th>유저이름</th>
+		<th>시간</th>
+		<th>날짜</th>
+	</tr>
+	<tbody id="tbody">
+	</tbody>
+</table>
+<script>
+	window.addEventListener('load',async function(){
+		const res = await fetch('/board-infos');
+		const boards = await res.json();
+		let html = '';
+		for(const board of boards){
+			html +='<tr>';
+			html +=`<td>${board.biNum}</td>`
+			html +=`<td>${board.biTitle}</td>`
+			html +=`<td>${board.biFileName}</td>`
+			html +=`<td>${board.uiName}</td>`
+			html +=`<td>${board.uiNum}</td>`
+			html +=`<td>${board.cretim}</td>`
+			html +=`<td>${board.credat}</td>`
+			html +='</tr>';
+		}
+		document.querySelector('#tbody').innerHTML = html;
+	})
+</script>
+</body>
+</html>
