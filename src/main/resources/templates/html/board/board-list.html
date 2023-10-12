@@ -12,15 +12,17 @@
 		<th>번호</th>
 		<th>제목</th>
 		<th>파일이름</th>
-		<th>유저번호</th>
 		<th>유저이름</th>
+		<th>유저번호</th>	
 		<th>시간</th>
 		<th>날짜</th>
 	</tr>
 	<tbody id="tbody">
 	</tbody>
 </table>
-<div id="pageDiv"></div>
+<div id="pageDiv">
+	
+</div>
 <script>
 	let total = 0;
 	let pageSize = 5;	
@@ -34,7 +36,8 @@
 		const pageBlock = Math.ceil(totalCnt/pageSize);
 		let pageHtml = '';
 		for(let i=1; i<=pageBlock; i++){
-			pageHtml += `<a href="/board-infos?page=${page}&pageSize=${pageSize}"><b>[ ${i} ] </b></a>`;
+			
+			pageHtml += `<a href="#" onclick="getBoards(event,${i})"><b>[ ${i} ]</b></a>`;
 		} 
 		document.querySelector('#pageDiv').innerHTML = pageHtml;
 		let html = '';
