@@ -2,13 +2,14 @@ package com.test.secu.board.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.test.secu.board.mapper.BoardInfoMapper;
 import com.test.secu.board.vo.BoardInfoVO;
 import com.test.secu.common.vo.ResponsePageVO;
@@ -43,17 +44,24 @@ public class BoardInfoService {
 		}
 		return null;
 	}
-	
+
 	public BoardInfoVO getBoardInfo(int biNum) {
 		return boardMapper.selectBoardInfo(biNum);
 	}
-	
+
 	public ResponsePageVO<BoardInfoVO> selectBoardInfos(BoardInfoVO board) {
+		board.setEnd(board.getPageSize());
+		int start = (board.getPage() - 1) * board.getPageSize();
+		board.setStart(start);
+
 		ResponsePageVO<BoardInfoVO> resVO = new ResponsePageVO<>();
-		
 		resVO.setList(boardMapper.selectBoardInfos(board));
 		resVO.setTotalCnt(boardMapper.selectBoardInfoCnt(board));
-		
 		return resVO;
+	}
+	
+	public PageInfo<BoardInfoVO> selectBoardInfosWithHelper(BoardInfoVO board) {
+		PageHelper.startPage(board.getPage(), board.getPageSize());
+		return new PageInfo<>(boardMapper.selectBoardInfosWithHelper(board));
 	}
 }

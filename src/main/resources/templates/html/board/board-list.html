@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/test.css">
+<link rel="stylesheet" href="/css/test2.css">
 </head>
 <body>
+	<input type="text" id="biTitle"> 
+	<button onclick="getBoards()">검색</button>
 <h3>List</h3>
 <table border="1">
 	<tr>
@@ -28,20 +30,37 @@
 </div>
 <script>
 	let total = 0;
-	let pageSize = 5;	
+	let pageSize = 10;
+	const blockSize = 10;	
 	const getBoards = async function(evt, page){
 		if(!page){
 			page = 1;
 		}
-		const res = await fetch(`/board-infos?page=${page}&pageSize=${pageSize}`);
+		let url = `/board-infos?page=${page}&pageSize=${pageSize}`;
+		url += `&biTitle=${document.querySelector('#biTitle').value}`;
+		alert(url);
+		const res = await fetch(url);
 		const json = await res.json();
 		const totalCnt = json.totalCnt;
 		const pageBlock = Math.ceil(totalCnt/pageSize);
 		let pageHtml = '';
-		for(let i=1; i<=pageBlock; i++){
-			
-			pageHtml += `<a href="#" onclick="getBoards(event,${i})"><b>[ ${i} ]</b></a>`;
-		} 
+		
+		const startBlock = (Math.ceil(page/blockSize)-1)*blockSize+1;
+		let endBlock = startBlock + blockSize -1;
+		if(endBlock>pageBlock){
+			endBlock = pageBlock;
+		}
+		
+		if(startBlock!=1){
+			pageHtml +=`<a href="javascript:void(0)" onclick="getBoards(event,${startBlock-1})">◀<a/>`
+		}
+		for(let i=startBlock; i<=endBlock; i++){
+			pageHtml += `<a href="javascript:void(0)" onclick="getBoards(event,${i})"><b>[ ${i} ]</b></a>`; //페이지 번호들
+		}
+		if(endBlock<pageBlock){
+			pageHtml +=`<a href="javascript:void(0)" onclick="getBoards(event,${endBlock+1})">▶</a>`
+		}
+		 
 		document.querySelector('#pageDiv').innerHTML = pageHtml;
 		let html = '';
 		for(const board of json.list){

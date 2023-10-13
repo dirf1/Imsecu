@@ -12,4 +12,6 @@ public interface BoardInfoMapper {
 	List<BoardInfoVO> selectBoardInfos(BoardInfoVO board);
 	
 	int selectBoardInfoCnt(BoardInfoVO board);
+	
+	List <BoardInfoVO> selectBoardInfosWithHelper(BoardInfoVO board);
 }
