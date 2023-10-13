@@ -1,4 +1,4 @@
-package com.test.secu.vo;
+package com.test.secu.user.vo;
 
 import java.util.Collection;
 import java.util.Collections;

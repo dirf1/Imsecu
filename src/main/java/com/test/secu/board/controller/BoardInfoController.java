@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.secu.board.service.BoardInfoService;
 import com.test.secu.board.vo.BoardInfoVO;
 import com.test.secu.common.vo.ResponsePageVO;
-import com.test.secu.vo.UserInfoVO;
+import com.test.secu.user.vo.UserInfoVO;
 
 import lombok.extern.slf4j.Slf4j;
 

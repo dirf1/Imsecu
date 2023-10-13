@@ -1,7 +1,7 @@
 package com.test.secu.user.mapper;
 
 
-import com.test.secu.vo.UserInfoVO;
+import com.test.secu.user.vo.UserInfoVO;
 
 public interface UserInfoMapper {
 	UserInfoVO selectUserInfoByUiId(String uiId);

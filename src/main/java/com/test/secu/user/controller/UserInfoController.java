@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.secu.user.service.UserInfoService;
-import com.test.secu.vo.UserInfoVO;
+import com.test.secu.user.vo.UserInfoVO;
 
 @RestController
 public class UserInfoController {

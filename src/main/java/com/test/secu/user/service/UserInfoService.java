@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.test.secu.user.mapper.UserInfoMapper;
-import com.test.secu.vo.UserInfoVO;
+import com.test.secu.user.vo.UserInfoVO;
 
 @Service
 public class UserInfoService implements UserDetailsService{
