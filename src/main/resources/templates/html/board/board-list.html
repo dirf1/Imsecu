@@ -38,7 +38,7 @@
 		}
 		let url = `/board-infos?page=${page}&pageSize=${pageSize}`;
 		url += `&biTitle=${document.querySelector('#biTitle').value}`;
-		alert(url);
+		//alert(url);
 		const res = await fetch(url);
 		const json = await res.json();
 		const totalCnt = json.totalCnt;

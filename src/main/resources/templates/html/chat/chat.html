@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<button onclick="openWs()">시작</button>
+	<button onclick="closeWs()">종료</button>
+	<button onclick="sendMsg()">보내기</button>
+	<textarea id="chatMsg"></textarea>
+	<script>
+		let ws;
+
+		function openWs() {
+			if (!ws || ws.readyState >= 2) {
+				ws = new WebSocket('ws://localhost/msg');
+				ws.onmessage = function(msg) {
+					document.querySelector('#chatMsg').value += msg.data + '\r\n';				
+				}
+			}
+		}
+		function sendMsg() {
+			if (ws.readyState === 1) {
+				ws.send('hello');
+			}
+		}
+		function closeWs() {
+			if (ws && ws.readyState < 2) {
+				ws.close();
+			}
+		}
+	</script>
+</body>
+
+</html>
